@@ -1,4 +1,7 @@
 import { ROOM } from '../../constants'
+import { SHELVES } from '../../data/layout'
+import { Shelf } from './Shelf'
+import { ProductInstances } from './ProductInstances'
 
 type WallProps = {
   position: [number, number, number]
@@ -36,6 +39,11 @@ export function Store() {
       <Wall position={[0, height / 2, depth / 2]} size={[width, height, t]} />
       <Wall position={[-width / 2, height / 2, 0]} size={[t, height, depth]} />
       <Wall position={[width / 2, height / 2, 0]} size={[t, height, depth]} />
+            {/* Rayons */}
+            {SHELVES.map((shelf) => (
+        <Shelf key={shelf.id} data={shelf} />
+      ))}
+            <ProductInstances />
     </group>
   )
 }

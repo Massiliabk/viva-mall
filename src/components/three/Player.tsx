@@ -4,9 +4,19 @@ import { PointerLockControls } from '@react-three/drei'
 import { Vector3 } from 'three'
 import { useKeyboard } from '../../hooks/useKeyboard'
 import { EYE_HEIGHT, PLAYER_SPEED, ROOM } from '../../constants'
+import { COLLIDERS } from '../../data/layout'
 
 const LIMIT_X = ROOM.width / 2 - 0.6
 const LIMIT_Z = ROOM.depth / 2 - 0.6
+const PLAYER_RADIUS = 0.35
+
+function isBlocked(x: number, z: number) {
+  return COLLIDERS.some(
+    (c) =>
+      Math.abs(x - c.x) < c.halfX + PLAYER_RADIUS &&
+      Math.abs(z - c.z) < c.halfZ + PLAYER_RADIUS,
+  )
+}
 
 type PlayerProps = {
   onLock: () => void
@@ -46,7 +56,12 @@ export function Player({ onLock, onUnlock }: PlayerProps) {
         .normalize()
         .multiplyScalar(PLAYER_SPEED * delta)
 
-      camera.position.add(move)
+      // Déplacement axe par axe pour glisser le long des obstacles
+      const nextX = camera.position.x + move.x
+      if (!isBlocked(nextX, camera.position.z)) camera.position.x = nextX
+
+      const nextZ = camera.position.z + move.z
+      if (!isBlocked(camera.position.x, nextZ)) camera.position.z = nextZ
     }
 
     // Limites de la salle + hauteur des yeux fixe
