@@ -72,7 +72,7 @@ export function Player({ onLock, onUnlock }: PlayerProps) {
 
   return (
     <PointerLockControls
-      selector="#enter-btn"
+      selector="#enter-btn, #resume-btn"
       onLock={onLock}
       onUnlock={onUnlock}
     />
