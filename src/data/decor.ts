@@ -1,4 +1,5 @@
 export type Collider = { x: number; z: number; halfX: number; halfZ: number }
+import { CHECKOUT_COLLIDERS } from './checkout'
 
 // Îlots promotionnels dans la zone d'entrée
 export const PROMO_ISLANDS = [
@@ -27,4 +28,5 @@ export const DECOR_COLLIDERS: Collider[] = [
     halfX: TOTEM_SIZE.width / 2,
     halfZ: TOTEM_SIZE.depth / 2,
   })),
+  ...CHECKOUT_COLLIDERS,
 ]

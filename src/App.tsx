@@ -13,6 +13,8 @@ import { useUiStore } from './store/useUiStore'
 import { ShoppingCart } from './components/three/ShoppingCart'
 import { FlyingItems } from './components/three/FlyingItems'
 import { Decor } from './components/three/Decor'
+import { Checkouts } from './components/three/Checkouts'
+import { CheckoutPicker } from './components/three/CheckoutPicker'
 
 export default function App() {
   const lock = useUiStore((s) => s.lock)
@@ -34,6 +36,8 @@ export default function App() {
         <ShoppingCart />
         <FlyingItems />
         <Decor />
+        <Checkouts />
+        <CheckoutPicker />
       </Canvas>
 
       <Loader />

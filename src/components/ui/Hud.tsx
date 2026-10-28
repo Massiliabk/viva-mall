@@ -9,6 +9,7 @@ export function Hud() {
   const aimedId = useUiStore((s) => s.aimedProductId)
   const toast = useUiStore((s) => s.toast)
   const clearToast = useUiStore((s) => s.clearToast)
+  const aimedCheckout = useUiStore((s) => s.aimedCheckout)
 
   const inCart = useCartStore((s) => (aimedId ? (s.items[aimedId] ?? 0) : 0))
   const count = useCartStore(selectCount)
@@ -42,6 +43,23 @@ export function Hud() {
           <div className="flex flex-col items-center">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500 text-2xl leading-none font-bold">
               +
+            </span>
+            <span className="mt-1 text-[10px] text-gray-300">Clic ou E</span>
+          </div>
+        </div>
+      )}
+            {/* Carte de la caisse visée */}
+            {!product && aimedCheckout && (
+        <div className="pointer-events-none absolute top-1/2 left-1/2 z-10 mt-8 flex -translate-x-1/2 items-center gap-3 rounded-2xl bg-black/70 px-4 py-3 text-white shadow-lg backdrop-blur">
+          <div>
+            <p className="font-semibold">Caisse</p>
+            <p className="text-sm text-emerald-300">
+              {count} article{count > 1 ? 's' : ''} · {formatPrice(total)}
+            </p>
+          </div>
+          <div className="flex flex-col items-center">
+            <span className="rounded-full bg-emerald-500 px-3 py-1 text-sm font-semibold">
+              Payer
             </span>
             <span className="mt-1 text-[10px] text-gray-300">Clic ou E</span>
           </div>

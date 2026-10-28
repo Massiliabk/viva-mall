@@ -5,22 +5,32 @@ export type ShelfData = {
   id: string
   category: string
   color: string
+  chilled: boolean // meuble réfrigéré
   position: [number, number, number]
   rotationY: number
   levels: string[] // un id de produit par étagère, du bas vers le haut
 }
 
-type Category = { name: string; color: string; products: string[] }
+type Category = {
+  name: string
+  color: string
+  products: string[]
+  chilled?: boolean
+}
 
+// Les catégories sèches d'abord, les catégories réfrigérées à la fin
 export const CATEGORIES: Category[] = [
   { name: 'Boissons', color: '#0984e3', products: ['eau', 'jus-orange', 'lait', 'soda'] },
   { name: 'Épicerie', color: '#e17055', products: ['semoule', 'pates', 'riz', 'sucre'] },
   { name: 'Cuisine & petit-déjeuner', color: '#00b894', products: ['huile', 'tomate', 'cafe', 'the'] },
-  { name: 'Produits laitiers', color: '#fd79a8', products: ['yaourt', 'fromage', 'beurre', 'creme'] },
   { name: 'Biscuits & snacks', color: '#fdcb6e', products: ['biscuits', 'chocolat', 'chips', 'gateau'] },
   { name: 'Hygiène', color: '#6c5ce7', products: ['savon', 'shampooing', 'dentifrice', 'papier'] },
   { name: 'Entretien', color: '#00cec9', products: ['lessive', 'vaisselle', 'javel', 'eponge'] },
+  { name: 'Produits laitiers', color: '#fd79a8', products: ['yaourt', 'fromage', 'beurre', 'creme'], chilled: true },
+  { name: 'Charcuterie & traiteur', color: '#e17055', products: ['dinde', 'merguez', 'poulet', 'oeufs'], chilled: true },
 ]
+
+const DRY_COUNT = CATEGORIES.filter((c) => !c.chilled).length
 
 const W = SHELF.width
 const D = SHELF.depth
@@ -37,7 +47,7 @@ function spread(n: number, center = 0) {
 }
 
 // Décale la liste de produits pour varier d'un rayon à l'autre
-function rotate<T>(list: T[], by: number) {
+function rotate<Item>(list: Item[], by: number) {
   const k = by % list.length
   return [...list.slice(k), ...list.slice(0, k)]
 }
@@ -55,6 +65,7 @@ function makeRun(
       id: `${runId}-${i}`,
       category: category.name,
       color: category.color,
+      chilled: category.chilled ?? false,
       position: [x, 0, z],
       rotationY,
       levels: rotate(category.products, i),
@@ -65,13 +76,20 @@ function makeRun(
 // Allées de gondoles (centre de chaque paire dos à dos, en z)
 const AISLES_Z = [-5.5, -1.5, 2.5]
 const GONDOLA_X = spread(6)
+const BACK_X = spread(7)
 
 export const SHELVES: ShelfData[] = [
-  // Mur du fond (face à l'entrée)
+  // Mur du fond : rayon frais (4 meubles laitiers, 3 meubles charcuterie & traiteur)
   ...makeRun(
-    'mur-fond',
+    'mur-fond-laitiers',
+    6,
+    BACK_X.slice(0, 4).map((x): [number, number] => [x, BACK_Z]),
     0,
-    spread(7).map((x): [number, number] => [x, BACK_Z]),
+  ),
+  ...makeRun(
+    'mur-fond-traiteur',
+    7,
+    BACK_X.slice(4).map((x): [number, number] => [x, BACK_Z]),
     0,
   ),
 
@@ -91,17 +109,17 @@ export const SHELVES: ShelfData[] = [
     -Math.PI / 2,
   ),
 
-  // Gondoles : deux rangées dos à dos par allée
+  // Gondoles : deux rangées dos à dos par allée (catégories sèches uniquement)
   ...AISLES_Z.flatMap((z, a) => [
     ...makeRun(
       `gondole-${a}-fond`,
-      3 + a * 2,
+      (3 + a * 2) % DRY_COUNT,
       GONDOLA_X.map((x): [number, number] => [x, z - D / 2]),
       Math.PI,
     ),
     ...makeRun(
       `gondole-${a}-entree`,
-      4 + a * 2,
+      (4 + a * 2) % DRY_COUNT,
       GONDOLA_X.map((x): [number, number] => [x, z + D / 2]),
       0,
     ),

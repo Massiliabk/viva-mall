@@ -49,6 +49,11 @@ export type Product = {
     { id: 'vaisselle', name: 'Liquide vaisselle 750 ml', price: 190, size: [0.08, 0.22, 0.05], color: '#1dd1a1' },
     { id: 'javel', name: 'Eau de Javel 1 L', price: 120, size: [0.1, 0.28, 0.06], color: '#48dbfb' },
     { id: 'eponge', name: 'Éponges x3', price: 60, size: [0.1, 0.03, 0.07], color: '#ff9f43' },
+      // Charcuterie & traiteur
+    { id: 'dinde', name: 'Dinde fumée 200 g', price: 450, size: [0.16, 0.1, 0.11], color: '#f4a6a6' },
+    { id: 'merguez', name: 'Merguez 500 g', price: 650, size: [0.2, 0.1, 0.12], color: '#c0392b' },
+    { id: 'poulet', name: 'Poulet mariné 1 kg', price: 900, size: [0.22, 0.12, 0.14], color: '#f6c26b' },
+    { id: 'oeufs', name: 'Œufs x12', price: 400, size: [0.2, 0.12, 0.15], color: '#d9b382' },
 
     
   ]
