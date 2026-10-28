@@ -1,4 +1,5 @@
 import { ROOM, SHELF } from '../constants'
+import { DECOR_COLLIDERS } from './decor'
 
 export type ShelfData = {
   id: string
@@ -107,8 +108,8 @@ export const SHELVES: ShelfData[] = [
   ]),
 ]
 
-// Zones interdites au joueur (un rectangle par rayon)
-export const COLLIDERS = SHELVES.map((s) => {
+// Zones interdites au joueur : un rectangle par rayon + les éléments de décoration
+const SHELF_COLLIDERS = SHELVES.map((s) => {
   const rotated = Math.abs(Math.sin(s.rotationY)) > 0.5 // rayon tourné de 90°
   return {
     x: s.position[0],
@@ -117,3 +118,5 @@ export const COLLIDERS = SHELVES.map((s) => {
     halfZ: (rotated ? W : D) / 2,
   }
 })
+
+export const COLLIDERS = [...SHELF_COLLIDERS, ...DECOR_COLLIDERS]

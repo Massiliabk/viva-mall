@@ -12,6 +12,7 @@ import { EYE_HEIGHT, ROOM } from './constants'
 import { useUiStore } from './store/useUiStore'
 import { ShoppingCart } from './components/three/ShoppingCart'
 import { FlyingItems } from './components/three/FlyingItems'
+import { Decor } from './components/three/Decor'
 
 export default function App() {
   const lock = useUiStore((s) => s.lock)
@@ -32,6 +33,7 @@ export default function App() {
         <Player onLock={lock} onUnlock={unlock} />
         <ShoppingCart />
         <FlyingItems />
+        <Decor />
       </Canvas>
 
       <Loader />
