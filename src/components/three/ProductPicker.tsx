@@ -5,6 +5,7 @@ import { BACK_PANELS, PLACEMENTS } from '../../data/placements'
 import { PRODUCTS_BY_ID } from '../../data/products'
 import { useCartStore } from '../../store/useCartStore'
 import { useUiStore } from '../../store/useUiStore'
+import { useFlightStore } from '../../store/useFlightStore'
 
 const REACH = 3.2 // distance maximale pour viser un produit (en mètres)
 
@@ -85,6 +86,15 @@ export function ProductPicker() {
     const addAimedProduct = () => {
       const { locked, aimedProductId, notify } = useUiStore.getState()
       if (!locked || !aimedProductId) return
+
+      // Le produit vole du rayon jusqu'au chariot
+      const index = lastIndex.current
+      if (index >= 0) {
+        const center = PLACEMENTS[index].box.getCenter(new Vector3())
+        useFlightStore
+          .getState()
+          .addFlight(aimedProductId, [center.x, center.y, center.z])
+      }
 
       useCartStore.getState().addItem(aimedProductId)
       const quantity = useCartStore.getState().items[aimedProductId]

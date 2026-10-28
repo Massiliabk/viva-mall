@@ -10,6 +10,8 @@ import { Hud } from './components/ui/Hud'
 import { CartPanel } from './components/ui/CartPanel'
 import { EYE_HEIGHT, ROOM } from './constants'
 import { useUiStore } from './store/useUiStore'
+import { ShoppingCart } from './components/three/ShoppingCart'
+import { FlyingItems } from './components/three/FlyingItems'
 
 export default function App() {
   const lock = useUiStore((s) => s.lock)
@@ -28,6 +30,8 @@ export default function App() {
         </Suspense>
         <ProductPicker />
         <Player onLock={lock} onUnlock={unlock} />
+        <ShoppingCart />
+        <FlyingItems />
       </Canvas>
 
       <Loader />
