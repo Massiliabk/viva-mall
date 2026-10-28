@@ -1,6 +1,29 @@
 @import "tailwindcss";
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   margin: 0;
+}
+
+/* Hauteur réelle de l'écran sur mobile (barre d'adresse comprise) */
+#root {
+  height: 100dvh;
+}
+
+body {
+  overflow: hidden;
+  overscroll-behavior: none; /* évite le "tirer pour rafraîchir" */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Les champs de saisie (formulaire de commande à venir) restent sélectionnables */
+input,
+textarea {
+  user-select: text;
+  -webkit-user-select: text;
 }

@@ -1,11 +1,13 @@
 import { PRODUCTS_BY_ID } from '../../data/products'
 import { selectCount, selectTotal, useCartStore } from '../../store/useCartStore'
 import { useUiStore } from '../../store/useUiStore'
+import { IS_TOUCH } from '../../utils/device'
 import { formatPrice } from '../../utils/format'
 
 export function CartPanel() {
   const locked = useUiStore((s) => s.locked)
   const cartOpen = useUiStore((s) => s.cartOpen)
+  const lock = useUiStore((s) => s.lock)
 
   const items = useCartStore((s) => s.items)
   const addItem = useCartStore((s) => s.addItem)
@@ -25,14 +27,14 @@ export function CartPanel() {
       }`}
     >
       <aside className="flex h-full w-full max-w-md flex-col bg-white shadow-2xl">
-        <header className="flex items-center justify-between border-b px-5 py-4">
+        <header className="flex items-center justify-between border-b px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4">
           <h2 className="text-xl font-bold text-emerald-700">Mon panier</h2>
           <span className="text-sm text-gray-500">
             {count} article{count > 1 ? 's' : ''}
           </span>
         </header>
 
-        <ul className="flex-1 divide-y overflow-y-auto px-5">
+        <ul className="flex-1 divide-y overflow-y-auto overscroll-contain px-5">
           {entries.length === 0 && (
             <li className="py-10 text-center text-gray-500">
               Votre panier est vide.
@@ -57,7 +59,7 @@ export function CartPanel() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => removeOne(id)}
-                    className="h-7 w-7 rounded-full border text-lg leading-none hover:bg-gray-100"
+                    className="h-9 w-9 rounded-full border text-xl leading-none hover:bg-gray-100 sm:h-7 sm:w-7 sm:text-lg"
                     aria-label="Retirer un article"
                   >
                     −
@@ -65,7 +67,7 @@ export function CartPanel() {
                   <span className="w-5 text-center">{quantity}</span>
                   <button
                     onClick={() => addItem(id)}
-                    className="h-7 w-7 rounded-full border text-lg leading-none hover:bg-gray-100"
+                    className="h-9 w-9 rounded-full border text-xl leading-none hover:bg-gray-100 sm:h-7 sm:w-7 sm:text-lg"
                     aria-label="Ajouter un article"
                   >
                     +
@@ -74,7 +76,7 @@ export function CartPanel() {
 
                 <button
                   onClick={() => removeItem(id)}
-                  className="text-gray-400 hover:text-red-500"
+                  className="p-2 text-gray-400 hover:text-red-500"
                   aria-label="Supprimer du panier"
                 >
                   ✕
@@ -84,14 +86,16 @@ export function CartPanel() {
           })}
         </ul>
 
-        <footer className="space-y-3 border-t px-5 py-4">
+        <footer className="space-y-3 border-t px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <div className="flex justify-between text-lg font-semibold">
             <span>Total</span>
             <span>{formatPrice(total)}</span>
           </div>
 
+          {/* Sur ordinateur, PointerLockControls gère ce clic ; sur mobile on reprend directement */}
           <button
             id="resume-btn"
+            onClick={IS_TOUCH ? lock : undefined}
             className="w-full rounded-lg bg-emerald-600 py-3 font-semibold text-white hover:bg-emerald-700"
           >
             Reprendre la visite
@@ -100,7 +104,7 @@ export function CartPanel() {
           <button
             onClick={clear}
             disabled={count === 0}
-            className="w-full rounded-lg border py-2 text-sm text-gray-600 hover:bg-gray-50 disabled:opacity-40"
+            className="w-full rounded-lg border py-2.5 text-sm text-gray-600 hover:bg-gray-50 disabled:opacity-40"
           >
             Vider le panier
           </button>
