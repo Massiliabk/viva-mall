@@ -1,15 +1,13 @@
-import { SHELF } from '../../constants'
+import { SHELF, SHELF_MODEL } from '../../constants'
 import type { ShelfData } from '../../data/layout'
+import { ShelfModel } from './ShelfModel'
 
 const { width, depth, height, boardThickness, firstLevelY, levelGap } = SHELF
 
-type ShelfProps = {
-  data: ShelfData
-}
-
-export function Shelf({ data }: ShelfProps) {
+// Rayon généré (utilisé quand aucun modèle glTF n'est configuré)
+function ProceduralFrame({ levels }: { levels: number }) {
   return (
-    <group position={data.position} rotation={[0, data.rotationY, 0]}>
+    <>
       {/* Panneau arrière */}
       <mesh position={[0, height / 2, -depth / 2 + 0.015]}>
         <boxGeometry args={[width, height, 0.03]} />
@@ -30,19 +28,35 @@ export function Shelf({ data }: ShelfProps) {
         <meshStandardMaterial color="#aab2bd" />
       </mesh>
 
-      {/* Bandeau coloré de la catégorie */}
-      <mesh position={[0, height + 0.17, depth / 2 - 0.04]}>
-        <boxGeometry args={[width, 0.3, 0.06]} />
-        <meshStandardMaterial color={data.color} />
-      </mesh>
-
       {/* Étagères */}
-      {data.levels.map((_, level) => (
+      {Array.from({ length: levels }, (_, level) => (
         <mesh key={level} position={[0, firstLevelY + level * levelGap, 0]}>
           <boxGeometry args={[width - 0.08, boardThickness, depth]} />
           <meshStandardMaterial color="#c3c9d1" />
         </mesh>
       ))}
+    </>
+  )
+}
+
+type ShelfProps = {
+  data: ShelfData
+}
+
+export function Shelf({ data }: ShelfProps) {
+  return (
+    <group position={data.position} rotation={[0, data.rotationY, 0]}>
+      {SHELF_MODEL.url ? (
+        <ShelfModel url={SHELF_MODEL.url} />
+      ) : (
+        <ProceduralFrame levels={data.levels.length} />
+      )}
+
+      {/* Bandeau coloré de la catégorie */}
+      <mesh position={[0, height + 0.17, depth / 2 - 0.04]}>
+        <boxGeometry args={[width, 0.3, 0.06]} />
+        <meshStandardMaterial color={data.color} />
+      </mesh>
     </group>
   )
 }

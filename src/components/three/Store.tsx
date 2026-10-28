@@ -1,7 +1,8 @@
-import { ROOM } from '../../constants'
+import { FLOOR_TEXTURE, ROOM, WALL_TEXTURE } from '../../constants'
 import { SHELVES } from '../../data/layout'
-import { Shelf } from './Shelf'
 import { ProductInstances } from './ProductInstances'
+import { Shelf } from './Shelf'
+import { Surface } from './Surface'
 
 type WallProps = {
   position: [number, number, number]
@@ -9,10 +10,18 @@ type WallProps = {
 }
 
 function Wall({ position, size }: WallProps) {
+  const length = Math.max(size[0], size[2]) // longueur visible du mur
+
   return (
     <mesh position={position}>
       <boxGeometry args={size} />
-      <meshStandardMaterial color="#f4f0e6" roughness={0.9} />
+      <Surface
+        folder={WALL_TEXTURE.folder}
+        tileSize={WALL_TEXTURE.tileSize}
+        width={length}
+        height={size[1]}
+        color="#f4f0e6"
+      />
     </mesh>
   )
 }
@@ -25,7 +34,14 @@ export function Store() {
       {/* Sol */}
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[width, depth]} />
-        <meshStandardMaterial color="#d8d2c4" roughness={0.6} />
+        <Surface
+          folder={FLOOR_TEXTURE.folder}
+          tileSize={FLOOR_TEXTURE.tileSize}
+          width={width}
+          height={depth}
+          color="#d8d2c4"
+          tiles
+        />
       </mesh>
 
       {/* Plafond */}
@@ -39,11 +55,13 @@ export function Store() {
       <Wall position={[0, height / 2, depth / 2]} size={[width, height, t]} />
       <Wall position={[-width / 2, height / 2, 0]} size={[t, height, depth]} />
       <Wall position={[width / 2, height / 2, 0]} size={[t, height, depth]} />
-            {/* Rayons */}
-            {SHELVES.map((shelf) => (
+
+      {/* Rayons */}
+      {SHELVES.map((shelf) => (
         <Shelf key={shelf.id} data={shelf} />
       ))}
-            <ProductInstances />
+
+      <ProductInstances />
     </group>
   )
 }

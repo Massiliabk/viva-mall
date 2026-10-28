@@ -1,4 +1,6 @@
+import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
+import { Loader } from '@react-three/drei'
 import { Lights } from './components/three/Lights'
 import { Store } from './components/three/Store'
 import { Player } from './components/three/Player'
@@ -21,11 +23,14 @@ export default function App() {
       >
         <color attach="background" args={['#dfe6e9']} />
         <Lights />
-        <Store />
+        <Suspense fallback={null}>
+          <Store />
+        </Suspense>
         <ProductPicker />
         <Player onLock={lock} onUnlock={unlock} />
       </Canvas>
 
+      <Loader />
       <Overlay />
       <Hud />
       <CartPanel />

@@ -4,13 +4,14 @@ export type Product = {
     price: number // en DA
     size: [number, number, number] // largeur, hauteur, profondeur (en mètres)
     color: string // couleur provisoire en attendant les vrais modèles/images
+    image?: string
   }
   
   export const PRODUCTS: Product[] = [
     // Boissons
-    { id: 'eau', name: 'Eau minérale 1,5 L', price: 45, size: [0.1, 0.32, 0.1], color: '#74b9ff' },
+    { id: 'eau', name: 'Eau minérale 1,5 L', price: 45, size: [0.1, 0.32, 0.1], color: '#74b9ff', image: '/products/eau.webp' },
+    { id: 'lait', name: 'Lait UHT 1 L', price: 120, size: [0.1, 0.22, 0.07], color: '#f1f2f6', image: '/products/lait.jpeg' },
     { id: 'jus-orange', name: "Jus d'orange 1 L", price: 150, size: [0.1, 0.22, 0.07], color: '#fdcb6e' },
-    { id: 'lait', name: 'Lait UHT 1 L', price: 120, size: [0.1, 0.22, 0.07], color: '#f1f2f6' },
     { id: 'soda', name: 'Boisson gazeuse 1 L', price: 130, size: [0.1, 0.3, 0.1], color: '#d63031' },
   
     // Épicerie
@@ -48,6 +49,8 @@ export type Product = {
     { id: 'vaisselle', name: 'Liquide vaisselle 750 ml', price: 190, size: [0.08, 0.22, 0.05], color: '#1dd1a1' },
     { id: 'javel', name: 'Eau de Javel 1 L', price: 120, size: [0.1, 0.28, 0.06], color: '#48dbfb' },
     { id: 'eponge', name: 'Éponges x3', price: 60, size: [0.1, 0.03, 0.07], color: '#ff9f43' },
+
+    
   ]
   
   export const PRODUCTS_BY_ID = Object.fromEntries(
