@@ -1,4 +1,4 @@
-import type { ApiError } from '@viva-mall/shared'
+import { DEFAULT_LOCALE, type ApiError, type Locale } from '@viva-mall/shared'
 import { ApiRequestError } from './errors'
 import type { VivaApi } from './types'
 
@@ -11,14 +11,21 @@ function toQuery(params: Record<string, string | number | undefined>) {
   return text ? `?${text}` : ''
 }
 
-export function createHttpApi(baseUrl: string): VivaApi {
+export function createHttpApi(
+  baseUrl: string,
+  getLocale: () => Locale = () => DEFAULT_LOCALE,
+): VivaApi {
   const root = `${baseUrl.replace(/\/$/, '')}/api/v1`
 
   async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     const response = await fetch(`${root}${path}`, {
       ...init,
       credentials: 'include', // envoie le cookie du panier / de la session
-      headers: { 'Content-Type': 'application/json', ...init.headers },
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept-Language': getLocale(), // le serveur répond dans cette langue
+        ...init.headers,
+      },
     })
 
     if (!response.ok) {

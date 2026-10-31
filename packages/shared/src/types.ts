@@ -5,6 +5,9 @@ export type ID = string
 // 1 DA = 100 centimes. Exemple : 149,50 DA s'écrit 14950.
 export type Centimes = number
 
+// Langues du site : français par défaut, arabe en option
+export type Locale = 'fr' | 'ar'
+
 /* ---------- Catalogue ---------- */
 
 export type Category = {
@@ -128,5 +131,6 @@ export type Order = {
   delivery: OrderDelivery
   paymentMethod: PaymentMethod
   source: OrderSource
+  locale: Locale // langue utilisée pour la commande (notifications futures)
   createdAt: string // date ISO
 }

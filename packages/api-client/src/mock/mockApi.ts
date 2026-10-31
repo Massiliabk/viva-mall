@@ -8,6 +8,7 @@ import type {
 import { ApiRequestError } from '../errors'
 import type { VivaApi } from '../types'
 import { CATEGORIES, PRODUCTS } from './data'
+import { PRODUCT_AR } from './arabic'
 
 const DELAY_MS = 120 // simule le temps de réponse d'un vrai serveur
 const DELIVERY_FEE = 40000 // 400 DA (valeur provisoire)
@@ -117,7 +118,9 @@ export function createMockApi(): VivaApi {
 
       if (search) {
         const term = normalize(search)
-        items = items.filter((p) => normalize(`${p.name} ${p.description}`).includes(term))
+        items = items.filter((p) =>
+        normalize(`${p.name} ${p.description} ${PRODUCT_AR[p.id]?.name ?? ''}`).includes(term),
+      )
       }
 
       items = [...items]
@@ -220,6 +223,7 @@ export function createMockApi(): VivaApi {
         delivery: body.delivery,
         paymentMethod: body.paymentMethod,
         source: body.source,
+        locale: body.locale,
         createdAt: new Date().toISOString(),
       }
 

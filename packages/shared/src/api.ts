@@ -2,6 +2,7 @@ import type {
   CartView,
   Category,
   ID,
+  Locale,
   Order,
   OrderCustomer,
   OrderDelivery,
@@ -71,6 +72,7 @@ export type CreateOrderBody = {
   delivery: OrderDelivery
   paymentMethod: PaymentMethod
   source: OrderSource
+  locale: Locale
 }
 export type CreateOrderResponse = Order
 
