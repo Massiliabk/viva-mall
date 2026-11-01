@@ -10,6 +10,8 @@ export const CATEGORY_AR: Record<string, string> = {
   entretien: 'مواد التنظيف',
   'produits-laitiers': 'منتجات الألبان',
   'charcuterie-traiteur': 'اللحوم الباردة والأطباق الجاهزة',
+  frais: 'المنتجات الطازجة',
+  maison: 'المنزل',
 }
 
 // Clé = identifiant du produit

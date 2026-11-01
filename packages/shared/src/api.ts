@@ -33,6 +33,7 @@ export type ListProductsQuery = {
   category?: string
   search?: string
   sort?: ProductSort
+  onSale?: boolean // uniquement les produits en promotion
   page?: number
   pageSize?: number
 }

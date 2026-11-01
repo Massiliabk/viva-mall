@@ -1,0 +1,30 @@
+import type { TranslationKey } from './fr'
+
+// Si une clé manque ici, TypeScript le signale
+export const ar: Record<TranslationKey, string> = {
+  announcement: 'التوصيل مجاني ابتداءً من 5 000 دج · الاستلام من المتجر خلال ساعتين',
+  'search.placeholder': 'ابحث عن منتج أو علامة تجارية…',
+  'search.submit': 'بحث',
+  'header.visit': 'جولة 360°',
+  'header.cart': 'السلة',
+  'nav.promos': 'العروض',
+  'nav.new': 'الجديد',
+  'hero.badge': 'جديد',
+  'hero.title': 'تسوّق كأنك داخل المتجر.',
+  'hero.subtitle': 'اطلب عبر الإنترنت أو تجوّل بين أروقتنا بفضل الجولة الافتراضية 360°.',
+  'hero.visit': 'ابدأ الجولة الافتراضية',
+  'hero.shop': 'تسوّق الآن',
+  'deals.eyebrow': 'هذا الأسبوع',
+  'deals.title': 'عروض فيفا مول',
+  'visit.title': 'ادخل إلى المتجر… وأنت على أريكتك',
+  'visit.subtitle': 'تجوّل بين الأروقة، انقر على المنتجات وأضفها إلى سلتك مباشرة.',
+  'visit.cta': 'ابدأ الجولة',
+  'product.add': 'أضف إلى السلة',
+  'product.outOfStock': 'غير متوفر',
+  'footer.rights': 'جميع الحقوق محفوظة.',
+  'soon.title': 'قريبًا',
+  'soon.text': 'سيتم إنشاء هذه الصفحة في المرحلة القادمة.',
+  'soon.back': 'العودة إلى الرئيسية',
+  'error.loading': 'تعذّر تحميل المنتجات.',
+  'error.retry': 'إعادة المحاولة',
+}

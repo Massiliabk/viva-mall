@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@import "@fontsource-variable/plus-jakarta-sans";
+@import "@fontsource-variable/cairo";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans Variable", "Cairo Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy: #0a1f5c;
+  --color-primary: #0b3dae;
+  --color-brand-red: #e11d2e;
+  --color-tint: #e8f0fc;
+  --color-surface: #f8fbff;
+  --color-line: #dfe7f5;
+}
+
+body {
+  margin: 0;
+  background: var(--color-surface);
+  color: var(--color-navy);
+  font-family: var(--font-sans);
+}
+
+/* L'espacement entre lettres casse les liaisons de l'écriture arabe */
+html[dir="rtl"] * {
+  letter-spacing: normal !important;
+}

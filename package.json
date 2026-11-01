@@ -3,7 +3,9 @@
   "private": true,
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
-    "dev:3d": "npm run dev -w viva-mall-3d",
+    "dev:site": "npm run dev -w viva-mall-site",
+    "dev:3d": "npm run dev -w viva-mall-3d -- --port 5174 --strictPort",
+    "build:site": "npm run build -w viva-mall-site",
     "build:3d": "npm run build -w viva-mall-3d"
   }
 }

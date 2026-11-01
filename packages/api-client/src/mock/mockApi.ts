@@ -7,7 +7,8 @@ import type {
 } from '@viva-mall/shared'
 import { ApiRequestError } from '../errors'
 import type { VivaApi } from '../types'
-import { CATEGORIES, PRODUCTS } from './data'
+import { PRODUCTS } from './data'
+import { CATEGORIES } from './categories'
 import { PRODUCT_AR } from './arabic'
 
 const DELAY_MS = 120 // simule le temps de réponse d'un vrai serveur
@@ -107,9 +108,11 @@ export function createMockApi(): VivaApi {
 
     async listProducts(query = {}) {
       await wait()
-      const { category, search, sort = 'newest', page = 1, pageSize = 12 } = query
+      const { category, search, onSale, sort = 'newest', page = 1, pageSize = 12 } = query
 
       let items = PRODUCTS.filter((p) => p.isActive)
+
+      if (onSale) items = items.filter((p) => p.oldPrice !== null)
 
       if (category) {
         const found = CATEGORIES.find((c) => c.slug === category)

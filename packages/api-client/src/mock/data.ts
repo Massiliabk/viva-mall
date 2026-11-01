@@ -121,6 +121,11 @@ const OVERRIDES: Record<string, { stock?: number; oldPriceDA?: number }> = {
   yaourt: { oldPriceDA: 35 },
   javel: { stock: 0 },
   merguez: { stock: 3 },
+  eau: { oldPriceDA: 55 },
+  riz: { oldPriceDA: 200 },
+  chocolat: { oldPriceDA: 180 },
+  savon: { oldPriceDA: 85 },
+  lessive: { oldPriceDA: 900 },
 }
 
 export const PRODUCTS: Product[] = ROWS.map(
